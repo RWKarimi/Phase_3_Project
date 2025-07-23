@@ -51,11 +51,11 @@ Key performance metrics for the models (Churn = 1 class):
 
 | Metric    | Logistic Regression | Decision Tree |
 | --------- | ------------------- | ------------- |
-| Accuracy  | 0.81                | 0.79          |
-| Precision | 0.74                | 0.70          |
-| Recall    | 0.72                | 0.68          |
-| F1-Score  | 0.73                | 0.69          |
-| AUC-ROC   | 0.85                | 0.82          |
+| Accuracy  | 0.81                | 0.92          |
+| Precision | 0.39                | 0.76          |
+| Recall    | 0.57                | 0.62          |
+| F1-Score  | 0.47                | 0.68          |
+| AUC-ROC   | 0.76                | 0.85          |
 
 **Best Model:** Logistic Regression demonstrated the highest balance of precision and recall, making it the preferred choice for deployment.
 

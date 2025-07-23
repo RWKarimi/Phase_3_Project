@@ -71,7 +71,7 @@ Key performance metrics for the models (Churn = 1 class):
 
 # Presentation Slides
 
-> *Presentation link Syriatel presentation.pdf*
+> *Presentation link [Syriatel presentation.pdf*](https://github.com/RWKarimi/Phase_3_Project/blob/ft-Jupyter-Notebook/Syriatel%20presentation.pdf)
 
 # Running the Notebook
 

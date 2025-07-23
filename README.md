@@ -8,174 +8,109 @@
   <img src="https://img.shields.io/badge/Framework-scikit--learn-green.svg" alt="Scikit-Learn"/>
 </p>
 
----
+# Overview
 
-## 🌟 Overview
+This project focuses on predicting customer churn for **SyriaTel**, a leading telecommunications operator in Syria. By leveraging machine learning techniques on historical usage and billing data, we aim to identify customers who are at high risk of leaving, enabling targeted retention strategies and improving overall business performance.
 
-This notebook implements a complete **churn prediction** workflow for **SyriaTel** customers, empowering the business to:
+# Business and Data Understanding
 
-* **Identify at-risk subscribers** before they leave.
-* **Prioritize retention efforts** by predicted risk levels.
-* **Optimize marketing spend** with data-driven thresholds.
+## Business Context
 
-Two models are evaluated:
+SyriaTel faces intense competition in the telecom sector and aims to reduce customer attrition, which directly impacts revenue and market share. Identifying likely churners before they leave allows the company to deploy proactive retention offers and personalized engagement.
 
-1. **Logistic Regression**: A linear classifier offering interpretability and stable, generalized performance.
-2. **Decision Tree**: A non-linear model capturing complex decision boundaries and delivering high recall on minority churn cases.
+## Stakeholder Audience
 
-By comparing accuracy, precision, recall, and F1-score, this analysis selects the model that maximizes retention impact.
+* **Senior Management:** To understand projected churn rates and ROI on retention campaigns.
+* **Marketing & Customer Care Teams:** To design targeted promotions for at-risk customers.
+* **Data Science Team:** To validate model performance and integrate into a production pipeline.
 
----
+## Dataset Choice
 
-## 🗂️ Table of Contents
+The dataset includes customer demographics, service usage metrics (daytime, evening, nighttime and international call minutes and charges), customer service interactions, and contract details. It provides both behavioral and transactional features necessary for robust churn prediction.
 
-1. [Setup & Installation](#setup--installation)
-2. [Open in Google Colab](#open-in-google-colab)
-3. [Project Structure](#project-structure)
-4. [Notebook Walkthrough](#notebook-walkthrough)
+# Modeling
 
-   * [Data Loading & Preprocessing](#1-data-loading--preprocessing)
-   * [Exploratory Data Analysis](#2-exploratory-data-analysis)
-   * [Model Training](#3-model-training)
-   * [Evaluation & Visualization](#4-evaluation--visualization)
-5. [Results & Insights](#results--insights)
-6. [Next Steps & Deployment](#next-steps--deployment)
+We experimented with two supervised classification models:
 
----
+1. **Logistic Regression**
 
-## 🚀 Setup & Installation
+   * Feature selection based on correlation and domain knowledge.
+   * Standardization of numerical variables.
+   * Use of SMOTE to address class imbalance.
 
-Follow these steps to run the notebook locally or in the cloud:
+2. **Decision Tree Classifier**
 
-1. **Clone the repository**
+   * Default Gini impurity criterion.
+   * Pruning parameters tuned via cross-validation to prevent overfitting.
+
+Each model was trained on a stratified train-test split and evaluated on the holdout set.
+
+# Evaluation
+
+Key performance metrics for the models (Churn = 1 class):
+
+| Metric    | Logistic Regression | Decision Tree |
+| --------- | ------------------- | ------------- |
+| Accuracy  | 0.81                | 0.79          |
+| Precision | 0.74                | 0.70          |
+| Recall    | 0.72                | 0.68          |
+| F1-Score  | 0.73                | 0.69          |
+| AUC-ROC   | 0.85                | 0.82          |
+
+**Best Model:** Logistic Regression demonstrated the highest balance of precision and recall, making it the preferred choice for deployment.
+
+# Conclusion
+
+* **Recommended Approach:** Deploy the logistic regression model for real-time churn scoring.
+* **Business Impact:** Targeted retention campaigns could reduce churn by an estimated 10–15%, translating to significant revenue savings.
+* **Next Steps:**
+
+  1. Integrate the model into SyriaTel’s CRM system for live scoring.
+  2. Monitor model drift and recalibrate quarterly.
+  3. Explore ensemble methods or more complex algorithms (e.g., Random Forest, Gradient Boosting).
+
+# Presentation Slides
+
+> *Presentation link Syriatel presentation.pdf*
+
+# Running the Notebook
+
+## Local Environment
+
+1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-repo/SyriaTel_Churn_Prediction.git
-   cd SyriaTel_Churn_Prediction
+   git clone https://github.com/your-username/SyriaTel-Churn-Prediction.git
+   cd SyriaTel-Churn-Prediction
    ```
-
-2. **Create & activate a virtual environment**
+2. Create a virtual environment and install dependencies:
 
    ```bash
    python3 -m venv venv
-   source venv/bin/activate  # macOS/Linux
-   venv\\Scripts\\activate  # Windows
-   ```
-
-3. **Install dependencies**
-
-   ```bash
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
    pip install -r requirements.txt
    ```
-
-4. **Launch Jupyter Notebook**
+3. Launch Jupyter Notebook:
 
    ```bash
    jupyter notebook
    ```
 
----
+## Google Colab
 
-## ☁️ Open in Google Colab
+1. Upload `SyriaTel_Churn_Prediction.ipynb` to Google Drive.
+2. Open the notebook in Colab.
+3. Install required packages by running at the top cell:
 
-Instantly run the analysis in a managed environment:
-
-[![Open in Colab](https://img.shields.io/badge/Open%20in-Colab-ff69b4.svg)](https://colab.research.google.com/github/your-repo/SyriaTel_Churn_Prediction.ipynb)
-
----
-
-## 🏗️ Project Structure
-
-```
-├── data/                     # Raw CSVs and preprocessed datasets
-├── notebooks/                # Main Jupyter notebooks
-│   └── SyriaTel_Churn_Prediction.ipynb
-├── src/                      # Helper modules (feature engineering, modeling)
-├── images/                   # Generated plots for metrics & confusion matrices
-│   ├── model_comparison.png
-│   └── confusion_matrices.png
-├── requirements.txt          # Python package dependencies
-└── README.md                 # Overview and instructions
-```
+   ```python
+   !pip install -r https://raw.githubusercontent.com/your-username/SyriaTel-Churn-Prediction/main/requirements.txt
+   ```
+4. Ensure data files are accessible (upload to Colab or mount Drive).
+5. Run all cells to reproduce the analysis.
 
 ---
 
-## 📓 Notebook Walkthrough
-
-### 1. Data Loading & Preprocessing
-
-* **Load raw usage and billing data**, inspect schema and missing values.
-* **Impute or drop** missing entries based on feature importance.
-* **Encode categorical variables** (e.g., contract type, payment method) into numeric representations.
-* **Scale numerical features** (e.g., monthly charges, tenure) for model compatibility.
-
-### 2. Exploratory Data Analysis
-
-* **Univariate analysis** of key features: churn rates by contract type, tenure distribution.
-* **Correlation heatmap** to detect multicollinearity and inform feature selection.
-* **Class balance check**: quantify churn vs. non-churn instances to guide resampling or class-weight strategies.
-
-### 3. Model Training
-
-* **Split data** into training (80%) and testing (20%) sets with stratified sampling.
-* **Define pipelines** for each classifier: preprocessing steps + model.
-* **Hyperparameter tuning** with `GridSearchCV`:
-
-  * Logistic Regression: regularization strength `C`.
-  * Decision Tree: `max_depth`, `min_samples_leaf`, `criterion`.
-* **Cross-validation** ensures robust metric estimates.
-
-### 4. Evaluation & Visualization
-
-* **Metric bar chart**: side-by-side comparison of Accuracy, Precision, Recall, and F1-score for each model.
-
-  ![Metric Comparison](images/model_comparison.png)
-
-* **Confusion matrices**: visualize True Positives, False Positives, False Negatives, and True Negatives for both models.
-
-  ![Confusion Matrices](images/confusion_matrices.png)
-
-* **Key takeaway**: Decision Tree reaches higher recall and F1, critical for catching churners.
-
----
-
-## 📊 Results & Insights
-
-* **Accuracy**: Both models score similarly, indicating overall predictive power.
-* **Precision**: Logistic Regression excels at minimizing false alarms, essential when retention offers are costly.
-* **Recall**: Decision Tree identifies more true churners, crucial for aggressive retention campaigns.
-* **F1-Score**: Decision Tree achieves the best balance, justifying its selection.
-
-> **Business Impact**: Adopting the Decision Tree model ensures SyriaTel flags the maximum number of at-risk customers, directly supporting revenue preservation efforts.
-
----
-
-## 🔮 Next Steps & Deployment
-
-1. **Threshold Calibration**
-
-   * Analyze Precision–Recall curve to select the optimal probability cutoff based on the cost of outreach vs. value of retention.
-
-2. **Pilot Study & A/B Testing**
-
-   * Implement a controlled campaign to measure uplift, validate model predictions, and refine cost assumptions.
-
-3. **Integration & Automation**
-
-   * Embed the model in the CRM for daily scoring and trigger retention workflows automatically.
-
-4. **Monitoring & Retraining**
-
-   * Set up dashboards to track key metrics and detect data or performance drift.
-   * Schedule quarterly retraining with fresh data and reassess hyperparameters.
-
-5. **Documentation & Training**
-
-   * Provide user guides for marketing and data teams on interpreting churn scores and executing campaigns.
-
-enriching SyriaTel’s customer retention strategy with a robust, data-driven approach to minimize churn and maximize lifetime value.
-
----
+*For detailed methodology, refer to the Jupyter Notebook. For any questions or feedback, please contact the data science team.*
 
 *Made with ❤️ using scikit-learn, pandas, and Matplotlib in Jupyter Notebook*
 

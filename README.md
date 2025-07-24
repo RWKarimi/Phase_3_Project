@@ -57,11 +57,11 @@ Key performance metrics for the models (Churn = 1 class):
 | F1-Score  | 0.47                | 0.68          |
 | AUC-ROC   | 0.76                | 0.85          |
 
-**Best Model:** Logistic Regression demonstrated the highest balance of precision and recall, making it the preferred choice for deployment.
+**Best Model:** Decision Trees demonstrated the highest balance of precision and recall, making it the preferred choice for deployment.
 
 # Conclusion
 
-* **Recommended Approach:** Deploy the logistic regression model for real-time churn scoring.
+* **Recommended Approach:** Deploy the decision tree model for real-time churn scoring.
 * **Business Impact:** Targeted retention campaigns could reduce churn by an estimated 10–15%, translating to significant revenue savings.
 * **Next Steps:**
 
